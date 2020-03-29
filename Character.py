@@ -42,7 +42,7 @@ class Character:
 class Player(Character):
     
     def __init__(self,name):
-        Character.__init__(self,name,1000,Sword(),{'SLASH':10,'FIRE':25},True)
+        Character.__init__(self,name,100,Sword(),{'SLASH':10,'FIRE':25},True)
         self.mana = 100
         self.inventory = Inventory([Health_Potion()])
         self.world_map = Map(
@@ -155,6 +155,7 @@ class Player(Character):
                     self.health += item.get_amount_restored()
                 self.inventory.drop_item(item)
                 print_text_normal("You used a health potion. You are at " + str(self.get_health()) + "HP.")
+                break
     
     def use_mana_potion(self):
         for item in self.inventory.get_inventory():
