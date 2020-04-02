@@ -9,15 +9,16 @@ from Room import *
 import random
 
 def get_command(player,enemy):
-    print_text_fast("What do you want to do?!\n1 - Fight\n2 - Use Item")
+    print_text_fast("What do you want to do?!\n\tFight\n\tUse Item")
     user_input = str(input(">> "))
-    if user_input == '1':
+    user_input = user_input.upper()
+    if user_input == 'FIGHT':
         print_text_fast("Choose your move")
         for move in player.get_moveset():
             print("|\t" + move)
         attack_choice = str(input(">> ")).upper()
         attack(player,enemy,attack_choice)
-    elif user_input == '2':
+    elif user_input == 'USE ITEM':
         if not player.get_player_inventory().is_empty():
             print_text_fast("Which potion do you want to use?")
             for item in player.get_player_inventory().get_inventory():
@@ -27,12 +28,14 @@ def get_command(player,enemy):
             use_potion(player,potion_choice)
         else:
             print_text_fast("Your inventory is empty!")
-            print_text_fast("What do you want to do?!\n1 - Fight\n2 - Use Item")
-            user_input = int(input(">> "))
+            print_text_fast("What do you want to do?!\n\tFight\n\tUse Item")
+            user_input = str(input(">> "))
+            user_input = user_input.upper()
     else:
         print_text_fast("invalid input!")
-        print_text_fast("What do you want to do?!\n1 - Fight\n2 - Use Item")
-        user_input = int(input(">> "))
+        print_text_fast("What do you want to do?!\n\tFight\n\tUse Item")
+        user_input = str(input(">> "))
+        user_input = user_input.upper()
 
 def attack(attacker,target,attack_name):
     if attacker.get_equipped_weapon() != None:
