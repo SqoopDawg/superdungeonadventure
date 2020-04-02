@@ -10,14 +10,20 @@ from Battle import *
 import sys
 import time
 
+
 def main_game():
 
     print_text_slow("What name do you go by?")
     user_name = str(input(">> "))
-    player = Player(user_name)
+    start_health = 100
     player_input = ''
-    print_text_slow("Welcome " + user_name + ". Good luck...")
-    while player_input != 'QUIT' and player.get_health() > 0:
+    if user_name.upper() == 'COOP' or user_name.upper() == 'COOPER':
+        print_text_slow("Time to die " + user_name + "...")
+        start_health = 1
+    else:
+        print_text_slow("Welcome " + user_name + ". Good luck...")
+    player = Player(user_name, start_health)
+    while player_input.upper() != 'QUIT' and player.get_health() > 0:
         if player.find_enemies() != None:
             initiate_battle(player,player.find_enemies())
             player.enemy_died()

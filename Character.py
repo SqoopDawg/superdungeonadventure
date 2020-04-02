@@ -6,6 +6,7 @@ from Item import *
 from Room import *
 from Gameplay import *
 
+
 class Character:
     
     def __init__(self,name,health,equipped_weapon,moveset,alive):
@@ -41,8 +42,8 @@ class Character:
 
 class Player(Character):
     
-    def __init__(self,name):
-        Character.__init__(self,name,100,Sword(),{'SLASH':10,'FIRE':25},True)
+    def __init__(self,name,health=100):
+        Character.__init__(self,name,health,Sword(),{'SLASH':10,'FIRE':25},True)
         self.mana = 100
         self.inventory = Inventory([Health_Potion()])
         self.world_map = Map(
@@ -149,10 +150,9 @@ class Player(Character):
     def use_health_potion(self):
         for item in self.inventory.get_inventory():
             if item.get_item_id() == 1:
-                if (self.health + item.get_amount_restored()) > 100:
+                self.health += item.get_amount_restored()
+                if self.health > 100:
                     self.health = 100
-                else:
-                    self.health += item.get_amount_restored()
                 self.inventory.drop_item(item)
                 print_text_normal("You used a health potion. You are at " + str(self.get_health()) + "HP.")
                 break
@@ -160,10 +160,9 @@ class Player(Character):
     def use_mana_potion(self):
         for item in self.inventory.get_inventory():
             if item.get_item_id() == 2:
-                if (self.mana + item.get_amount_restored()) > 100:
-                    self.mana= 100
-                else:
-                    self.mana += item.get_amount_restored()
+                self.mana += item.get_amount_restored()
+                if self.mana > 100:
+                    self.mana = 100
                 self.inventory.drop_item(item)
     
     def unlock_north_door(self):
@@ -300,6 +299,8 @@ class Player(Character):
                   "QUIT - quits Super Dungeon Adventure")
         elif user_input == 'QUIT':
             return user_input
+        else:
+            print('bad command')
     
     def find_enemies(self):
         return self.current_room.get_enemy_present()

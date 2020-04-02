@@ -10,14 +10,14 @@ import random
 
 def get_command(player,enemy):
     print_text_fast("What do you want to do?!\n1 - Fight\n2 - Use Item")
-    user_input = int(input(">> "))
-    if user_input == 1:
+    user_input = str(input(">> "))
+    if user_input == '1':
         print_text_fast("Choose your move")
         for move in player.get_moveset():
             print("|\t" + move)
         attack_choice = str(input(">> ")).upper()
         attack(player,enemy,attack_choice)
-    elif user_input == 2:
+    elif user_input == '2':
         if not player.get_player_inventory().is_empty():
             print_text_fast("Which potion do you want to use?")
             for item in player.get_player_inventory().get_inventory():
